@@ -16,7 +16,7 @@ namespace FirstApp_API.Controllers
 
         public GroupController(AcademyDBContext context)
         {
-           _context=context;
+           _context = context;
         }
 
         [HttpGet]
@@ -25,7 +25,15 @@ namespace FirstApp_API.Controllers
 
             List<Group> groups = _context.Groups.ToList();
 
-            return Ok(groups);
+            return Ok(new
+            {
+                StatusCode = 200,
+                Data = groups.Select(g => new
+                {
+                    g.Name,
+                    g.Profession
+                })
+            });
         }
 
         [HttpGet]

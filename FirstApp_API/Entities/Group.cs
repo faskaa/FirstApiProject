@@ -8,5 +8,8 @@
        
         public string Profession { get; set; } = null!;
 
+        public List<GroupMember> GroupMember { get; set; }
+
+
     }
 }
