@@ -1,4 +1,5 @@
-﻿using FirstApp_API.DAL;
+﻿using AutoMapper;
+using FirstApp_API.DAL;
 using FirstApp_API.DTOs;
 using FirstApp_API.Entities;
 using Microsoft.AspNetCore.Http;
@@ -13,27 +14,22 @@ namespace FirstApp_API.Controllers
     public class GroupController : ControllerBase
     {
         private readonly AcademyDBContext _context;
+        private readonly IMapper _mapper;
 
-        public GroupController(AcademyDBContext context)
+        public GroupController(AcademyDBContext context, IMapper mapper)
         {
            _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-
             List<Group> groups = _context.Groups.ToList();
 
-            return Ok(new
-            {
-                StatusCode = 200,
-                Data = groups.Select(g => new
-                {
-                    g.Name,
-                    g.Profession
-                })
-            });
+            GroupGetAllDTO dto = _mapper.Map<GroupGetAllDTO>(groups);
+
+            return Ok(dto);
         }
 
         [HttpGet]
@@ -42,7 +38,10 @@ namespace FirstApp_API.Controllers
         {
             Group group = _context.Groups.FirstOrDefault(g => g.Id == id)!;
             if (group == null) return NotFound();
-            return Ok(group);
+
+            GroupGetDTO dto = _mapper.Map<GroupGetDTO>(group);
+
+            return Ok(dto);
         }
 
         [HttpPost]

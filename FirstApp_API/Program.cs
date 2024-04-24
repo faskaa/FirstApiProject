@@ -1,4 +1,5 @@
 using FirstApp_API.DAL;
+using FirstApp_API.Mapper;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -13,6 +14,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AcademyDBContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+});
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<AutoMapperConfigruation>();  
 });
 var app = builder.Build();
 
