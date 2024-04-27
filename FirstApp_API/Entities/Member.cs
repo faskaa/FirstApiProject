@@ -9,5 +9,7 @@
         public string  Role { get; set; }
 
         public List<GroupMember> GroupMember { get; set; }
+        public List<Attendance> Attendance { get; set; }
+
     }
 }

@@ -4,6 +4,7 @@ using FirstApp_API.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FirstApp_API.Migrations
 {
     [DbContext(typeof(AcademyDBContext))]
-    partial class AcademyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240425203130_updatedAtandanceTableBoolean")]
+    partial class updatedAtandanceTableBoolean
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

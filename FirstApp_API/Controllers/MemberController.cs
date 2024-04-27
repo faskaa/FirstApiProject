@@ -133,5 +133,19 @@ namespace FirstApp_API.Controllers
         }
 
 
+        [HttpPost]
+        [Route("Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            Member member = _context.Members.FirstOrDefault(x => x.Id == id)!;
+            if (member == null) return NotFound();
+            _context.Members.Remove(member);
+            _context.SaveChanges();
+
+
+            return Ok(member);
+        }
+
+
     }
 }

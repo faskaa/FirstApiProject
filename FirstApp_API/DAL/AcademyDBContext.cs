@@ -14,6 +14,8 @@ namespace FirstApp_API.DAL
         public DbSet<Group> Groups { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<GroupMember> GroupMembers { get; set; }
+        public DbSet<Attendance> Attendance { get; set; }
+
 
     }
 }

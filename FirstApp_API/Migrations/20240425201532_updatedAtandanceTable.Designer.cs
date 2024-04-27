@@ -4,6 +4,7 @@ using FirstApp_API.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FirstApp_API.Migrations
 {
     [DbContext(typeof(AcademyDBContext))]
-    partial class AcademyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240425201532_updatedAtandanceTable")]
+    partial class updatedAtandanceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,13 +35,18 @@ namespace FirstApp_API.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsHere")
-                        .HasColumnType("bit");
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IsHere")
+                        .HasColumnType("int");
 
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("MemberId");
 
@@ -123,11 +130,19 @@ namespace FirstApp_API.Migrations
 
             modelBuilder.Entity("FirstApp_API.Entities.Attendance", b =>
                 {
+                    b.HasOne("FirstApp_API.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FirstApp_API.Entities.Member", "Member")
-                        .WithMany("Attendance")
+                        .WithMany()
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Group");
 
                     b.Navigation("Member");
                 });
@@ -158,8 +173,6 @@ namespace FirstApp_API.Migrations
 
             modelBuilder.Entity("FirstApp_API.Entities.Member", b =>
                 {
-                    b.Navigation("Attendance");
-
                     b.Navigation("GroupMember");
                 });
 #pragma warning restore 612, 618

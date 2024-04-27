@@ -12,7 +12,10 @@ namespace FirstApp_API.Mapper
             CreateMap<Group , GroupGetAllDTO>();
             CreateMap<Member , MemberGetDTO>();
             CreateMap<Member , MemberGetAllDTO>();
-            CreateMap<GroupMember, GroupMemberDTO>().ForMember(gmd => gmd.GroupName, gm => gm.MapFrom(g => g.Group.Name));
+            CreateMap<GroupMember, GroupMemberDTO>().ForMember(gmd => gmd.GroupName, gm => gm.MapFrom(g => g.Group != null ? g.Group.Name : "Not a member of any group"));
+            CreateMap<Member, AttendanceGetAllDTO>();
+            CreateMap<Attendance, AttendanceDTO>().ForMember(d => d.Date, opt => opt.MapFrom(t => t.Date.ToString("dd MMMM yyyy")));
+
 
 
         }
